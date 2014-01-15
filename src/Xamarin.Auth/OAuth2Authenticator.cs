@@ -23,7 +23,51 @@ using System.Text;
 
 namespace Xamarin.Auth
 {
-	/// <summary>
+	#if XAMARIN_AUTH_INTERNAL
+	internal class WindowsAzureOAuth2Authenticator : OAuth2Authenticator
+	#else
+	public class WindowsAzureOAuth2Authenticator : OAuth2Authenticator
+	#endif
+	{
+		string _resource;
+
+		public WindowsAzureOAuth2Authenticator (string tenantUrl, string clientId, string resource, Uri redirectUri)
+			: base(
+				clientId, 
+				null, 
+				null,
+				new Uri (tenantUrl + "/oauth2/authorize"),
+				redirectUri,
+				new Uri (tenantUrl + "/oauth2/token"))
+		{
+			_resource = resource;
+		}
+
+		protected override bool IsImplicit { get { return false; } }
+
+
+		/// <summary>
+		/// Method that returns the initial URL to be displayed in the web browser.
+		/// </summary>
+		/// <returns>
+		/// A task that will return the initial URL.
+		/// </returns>
+		public override Task<Uri> GetInitialUrlAsync ()
+		{
+			var task = base.GetInitialUrlAsync ();
+			return task
+				.ContinueWith (t => {
+						var uri = t.Result;
+						uri = new Uri(t.Result.AbsoluteUri + "&resource=" + Uri.EscapeDataString(_resource));
+
+						var tcs = new TaskCompletionSource<Uri> ();
+						tcs.SetResult (uri);
+						return tcs.Task;
+					}).Unwrap();
+		}	
+	}
+
+		/// <summary>
 	/// Implements OAuth 2.0 implicit granting. http://tools.ietf.org/html/draft-ietf-oauth-v2-31#section-4.2
 	/// </summary>
 #if XAMARIN_AUTH_INTERNAL
@@ -122,9 +166,6 @@ namespace Xamarin.Auth
 			}
 			this.clientId = clientId;
 
-			if (string.IsNullOrEmpty (clientSecret)) {
-				throw new ArgumentException ("clientSecret must be provided", "clientSecret");
-			}
 			this.clientSecret = clientSecret;
 
 			this.scope = scope ?? "";
@@ -170,7 +211,7 @@ namespace Xamarin.Auth
 			this.requestState = new string (chars);
 		}
 
-		bool IsImplicit { get { return accessTokenUrl == null; } }
+		protected virtual bool IsImplicit { get { return accessTokenUrl == null; } }
 
 		/// <summary>
 		/// Method that returns the initial URL to be displayed in the web browser.

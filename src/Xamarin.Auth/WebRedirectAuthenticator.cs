@@ -89,6 +89,11 @@ namespace Xamarin.Auth
 			OnPageEncountered (url, query, fragment);
 		}
 
+		public override bool ShouldOverrideUrlLoading (Uri url)
+		{
+			return UrlMatchesRedirect (url);
+		}
+
 		/// <summary>
 		/// Raised when a new page has been encountered.
 		/// </summary>

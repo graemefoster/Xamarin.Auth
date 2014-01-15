@@ -155,7 +155,7 @@ namespace Xamarin.Auth
 
 			public override bool ShouldOverrideUrlLoading (WebView view, string url)
 			{
-				return false;
+				return activity.state.Authenticator.ShouldOverrideUrlLoading(new Uri(url));
 			}
 
 			public override void OnPageStarted (WebView view, string url, Android.Graphics.Bitmap favicon)

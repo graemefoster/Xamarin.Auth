@@ -67,6 +67,18 @@ namespace Xamarin.Auth
 		}
 
 		/// <summary>
+		/// Event handler called when a redireect is about to be followed.
+		/// You should return false if you want to stop the redirect (in the case of it containing the code).
+		/// </summary>
+		/// <param name='url'>
+		/// The URL of the page.
+		/// </param>
+		public virtual bool ShouldOverrideUrlLoading(Uri uri)
+		{
+			return false;
+		}
+
+		/// <summary>
 		/// Event handler called when a new page has been loaded in the web browser.
 		/// Implementations should call <see cref="Authenticator.OnSucceeded(Xamarin.Auth.Account)"/> if this page
 		/// signifies a successful authentication.

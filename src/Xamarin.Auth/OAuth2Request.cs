@@ -16,6 +16,7 @@
 using System;
 using System.Collections.Generic;
 using Xamarin.Auth;
+using Xamarin.Auth.PCL;
 
 namespace Xamarin.Auth
 {
@@ -37,7 +38,7 @@ namespace Xamarin.Auth
 		/// Parameters that will pre-populate the <see cref="Request.Parameters"/> property or <c>null</c>.
 		/// </param>
 		/// <param name='account'>The account used to authenticate this request.</param>
-		public OAuth2Request (string method, Uri url, IDictionary<string, string> parameters, Account account)
+		public OAuth2Request (string method, Uri url, IDictionary<string, string> parameters, IAccount account)
 			: base (method, url, parameters, account)
 		{
 			AccessTokenParameterName = "access_token";
@@ -72,7 +73,7 @@ namespace Xamarin.Auth
 		/// <param name='unauthenticatedUrl'>The unauthenticated URL.</param>
 		/// <param name='accessTokenParameterName'>The name of the access token parameter.</param>
 		/// <seealso cref="AccessTokenParameterName"/>
-		public static Uri GetAuthenticatedUrl (Account account, Uri unauthenticatedUrl, string accessTokenParameterName = "access_token")
+		public static Uri GetAuthenticatedUrl (IAccount account, Uri unauthenticatedUrl, string accessTokenParameterName = "access_token")
 		{
 			if (account == null) {
 				throw new ArgumentNullException ("account");

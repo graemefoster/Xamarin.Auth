@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -102,5 +102,11 @@
     <Compile Include="..\Xamarin.Auth\Response.cs">
       <Link>Response.cs</Link>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Xamarin.Auth.PCL\Xamarin.Auth.PCL.csproj">
+      <Project>{70DCB188-CA42-4FF9-9364-81DD62904C8C}</Project>
+      <Name>Xamarin.Auth.PCL</Name>
+    </ProjectReference>
   </ItemGroup>
 </Project>

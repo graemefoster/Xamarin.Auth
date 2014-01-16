@@ -17,6 +17,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Threading;
+using Xamarin.Auth.PCL;
 using Xamarin.Utilities;
 
 #if PLATFORM_IOS
@@ -237,7 +238,7 @@ namespace Xamarin.Auth
 		/// <value>
 		/// The account.
 		/// </value>
-		public Account Account { get; private set; }
+		public IAccount Account { get; private set; }
 
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Xamarin.Auth.AuthenticatorCompletedEventArgs"/> class.

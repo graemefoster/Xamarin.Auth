@@ -106,7 +106,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xamarin.Auth.PCL\Xamarin.Auth.PCL.csproj">
-      <Project>{70dcb188-ca42-4ff9-9364-81dd62904c8c}</Project>
+      <Project>{70DCB188-CA42-4FF9-9364-81DD62904C8C}</Project>
       <Name>Xamarin.Auth.PCL</Name>
     </ProjectReference>
   </ItemGroup>

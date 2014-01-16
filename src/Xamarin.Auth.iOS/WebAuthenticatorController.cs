@@ -190,6 +190,8 @@ namespace Xamarin.Auth
 					Uri url;
 					if (Uri.TryCreate (nsUrl.AbsoluteString, UriKind.Absolute, out url)) {
 						controller.authenticator.OnPageLoading (url);
+						var stopRedirect = controller.authenticator.ShouldOverrideUrlLoading (url);
+						return !stopRedirect;
 					}
 				}
 
@@ -206,6 +208,9 @@ namespace Xamarin.Auth
 			public override void LoadFailed (UIWebView webView, NSError error)
 			{
 				if (error.Domain == "NSURLErrorDomain" && error.Code == -999)
+					return;
+
+				if (error.Domain == "WebKitErrorDomain" && error.Code == 102)
 					return;
 
 				controller.activity.StopAnimating ();
